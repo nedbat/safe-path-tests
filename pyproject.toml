@@ -1,0 +1,11 @@
+[project]
+name = "safe-path-tests"
+description = "Test how PYTHONSAFEPATH works"
+version = "0.1.0"
+
+[project.scripts]
+safepathtests = "safepathtests.main:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

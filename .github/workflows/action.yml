@@ -1,0 +1,55 @@
+name: "Run them"
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: 1
+
+jobs:
+  run:
+    name: "Run on ${{ matrix.os }}"
+    runs-on: "${{ matrix.os }}-latest"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu
+          - macos
+          - windows
+
+    steps:
+      - name: "Check out the repo"
+        uses: "actions/checkout@v4"
+
+      - name: "Set up Python"
+        uses: "actions/setup-python@v5"
+        with:
+          # The last listed Python version is the default.
+          python-version: |
+            pypy-3.9
+            3.9
+            3.10
+            3.11
+            3.12
+            3.13
+
+      - name: "Install dependencies"
+        run: |
+          python -m pip install tox
+
+      - name: "Run tox"
+        run: |
+          python -m tox

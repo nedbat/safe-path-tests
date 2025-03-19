@@ -5,6 +5,7 @@ print("=" * 80)
 print(f"{sys.version}")
 print(f"{sys.argv = }")
 print(f"{os.getcwd() = }")
+print(f"{__file__ = }")
 
 print("sys.path:")
 for i, p in enumerate(sys.path):
